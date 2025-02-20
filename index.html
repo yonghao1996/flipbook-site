@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipbook</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('images/furniture-bg.jpg') no-repeat center center/cover;
+        }
+        .flipbook-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 90%;
+            max-width: 700px;
+            height: 90vh;
+        }
+        .flipbook {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            perspective: 2000px;
+        }
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            transition: transform 1s ease-in-out;
+            transform-origin: left;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .page img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 0;
+        }
+        .flipped {
+            transform: rotateY(-180deg);
+        }
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            cursor: pointer;
+            user-select: none;
+            z-index: 10;
+        }
+        .arrow-left {
+            left: 5px;
+        }
+        .arrow-right {
+            right: 5px;
+        }
+        @media (max-width: 768px) {
+            .flipbook-container {
+                width: 100%;
+                height: 100vh;
+            }
+            .flipbook {
+                width: 100%;
+                height: 100%;
+            }
+            .arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="flipbook-container">
+        <div class="arrow arrow-left" onclick="flipPrev()">&#9664;</div>
+        <div class="flipbook" id="flipbook">
+            <div class="page" id="page1" style="z-index: 7;"><img src="images/page1.jpg" alt="Page 1"></div>
+            <div class="page" id="page2" style="z-index: 6;"><img src="images/page2.jpg" alt="Page 2"></div>
+            <div class="page" id="page3" style="z-index: 5;"><img src="images/page3.jpg" alt="Page 3"></div>
+            <div class="page" id="page4" style="z-index: 4;"><img src="images/page4.jpg" alt="Page 4"></div>
+            <div class="page" id="page5" style="z-index: 3;"><img src="images/page5.jpg" alt="Page 5"></div>
+            <div class="page" id="page6" style="z-index: 2;"><img src="images/page6.jpg" alt="Page 6"></div>
+            <div class="page" id="page7" style="z-index: 1;"><img src="images/page7.jpg" alt="Page 7"></div>
+        </div>
+        <div class="arrow arrow-right" onclick="flipNext()">&#9654;</div>
+    </div>
+    <script>
+        let currentPage = 0;
+        const pages = document.querySelectorAll(".page");
+        
+        function flipNext() {
+            if (currentPage < pages.length - 1) {
+                pages[currentPage].classList.add("flipped");
+                currentPage++;
+            }
+        }
+        
+        function flipPrev() {
+            if (currentPage > 0) {
+                currentPage--;
+                pages[currentPage].classList.remove("flipped");
+            }
+        }
+    </script>
+</body>
+</html>
